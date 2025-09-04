@@ -5,45 +5,67 @@ import (
 	"log"
 )
 
+var (
+	n, m, algoNum int
+	allowedMinNum = 0
+	allowedMaxNum = 1000
+	amountOfAlgos = 2
+)
+
 func RunLab1() {
-	var n, m int
-	fmt.Println("Enter n and m:")
-	_, err := fmt.Scan(&n, &m)
-	if err != nil {
-		log.Fatal(err)
+	ScanUserInput()
+
+	if !ValidateUserInput(n, m) {
+		log.Fatalf("Please enter nums within allowed range from %d to %d", allowedMinNum, allowedMaxNum)
 	}
 
-	if m == 0 && n == 0 {
-		log.Fatal("Both m and n are zero")
+	if !ValidateUserAlgoInput(algoNum) {
+		log.Fatalf("Please enter a valid algo num")
 	}
 
-	if m < 0 {
-		m = -m
-	}
-	if n < 0 {
-		n = -n
-	}
-
-	var algorithm string
-	fmt.Println("Please enter the algorithm [euclid, sequential]: ")
-	_, err = fmt.Scan(&algorithm)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	switch algorithm {
-	case "euclid":
+	switch algoNum {
+	case 1:
 		fmt.Println(GCDEuclid(n, m))
-	case "sequential":
+	case 2:
 		fmt.Println(GCDSequential(n, m))
 	}
 }
 
+func ScanUserInput() {
+	fmt.Println("Enter n:")
+	fmt.Scan(&n)
+
+	fmt.Println("Enter m:")
+	fmt.Scan(&m)
+
+	fmt.Println("Enter num of algorithm \n 1: Euclid \n 2: Sequential Search")
+	fmt.Scan(&algoNum)
+}
+
+func ValidateUserInput(n, m int) bool {
+	if n < allowedMinNum || n > allowedMaxNum {
+		return false
+	}
+
+	if m < allowedMinNum || m > allowedMaxNum {
+		return false
+	}
+
+	return true
+}
+
+func ValidateUserAlgoInput(algoNum int) bool {
+	if algoNum <= 0 || algoNum > amountOfAlgos {
+		return false
+	}
+
+	return true
+}
+
 func GCDEuclid(n, m int) int {
-	//Обчислення НСД чисел m і n за допомогою алгоритму Евкліда.®
+	//Обчислення НСД чисел m і n за допомогою алгоритму Евкліда
 
 	if n == 0 {
-		fmt.Println("GCDEuclid is zero")
 		return m
 	}
 
