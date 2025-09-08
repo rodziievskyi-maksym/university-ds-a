@@ -69,17 +69,23 @@ func GCDEuclid(n, m int) int {
 		return m
 	}
 
+	iterations := 0
+
 	for n != 0 {
 		r := m % n
 		m = n
 		n = r
+
+		iterations++
 	}
 
+	fmt.Println("iterations:", iterations)
 	return m
 }
 
 func GCDSequential(n, m int) int {
 	//Обчислення НСД чисел m і n за допомогою послідовного перебору з кінця
+	iterations := 0
 
 	if m == 0 {
 		return n
@@ -95,8 +101,11 @@ func GCDSequential(n, m int) int {
 
 	for i := minNum; i >= 1; i-- {
 		if m%i == 0 && n%i == 0 {
+			iterations++
+			fmt.Println("iterations:", iterations)
 			return i
 		}
+		iterations++
 	}
 
 	return 1
